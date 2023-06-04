@@ -1,1 +1,27 @@
-<p>register works!</p>
+<div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Crie sua Conta</h5>
+            <form [formGroup]="formRegister">
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="nome" class="form-control" id="nome" placeholder="Digite seu nome" formControlName="name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Digite seu email" formControlName="email">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="password" placeholder="Digite sua senha" formControlName="password">
+                </div>
+                <div class="mb-3">
+                    <label for="passwordconfirm" class="form-label">Confirme sua Senha</label>
+                    <input type="password" class="form-control" id="passwordconfirm" placeholder="Repita sua senha" formControlName="passwordConfirm">
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!formRegister.valid">Cadastrar</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
