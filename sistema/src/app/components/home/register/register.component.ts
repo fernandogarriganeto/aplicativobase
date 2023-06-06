@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatchPasswordValidator } from 'src/app/validators/matchpassword.validator';
 
 @Component({
   selector: 'app-register',
@@ -24,6 +25,22 @@ export class RegisterComponent {
     passwordConfirm: new FormControl('', [
       Validators.required
     ]),
-  })
+  }, {
+    validators: [
+      MatchPasswordValidator.matchPassword
+    ]
+  });
+
+
+
+  get form(): any {
+    return this.formRegister.controls;
+  }
+
+
+  onSubmit() : void {
+    console.log(this.formRegister.value);
+  }
+
 
 }

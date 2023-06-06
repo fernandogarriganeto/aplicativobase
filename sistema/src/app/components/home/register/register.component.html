@@ -2,22 +2,54 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Crie sua Conta</h5>
-            <form [formGroup]="formRegister">
-                <div class="mb-3">
+            <form [formGroup]="formRegister" (ngSubmit)="onSubmit()">
+                <div class="mb-2">
                     <label for="nome" class="form-label">Nome</label>
                     <input type="nome" class="form-control" id="nome" placeholder="Digite seu nome" formControlName="name">
+                    <span class="text-danger" *ngIf="form.name.touched && form.name.invalid" >
+                        <small *ngIf="form.name.errors.required">
+                            Por favor, informe o nome do usuário.
+                        </small>
+                        <small *ngIf="form.name.errors.pattern">
+                            O nome deve ter entre 8 e 100 caracteres.
+                        </small>
+                    </span>
                 </div>
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="Digite seu email" formControlName="email">
+                    <span class="text-danger" *ngIf="form.email.touched && form.email.invalid" >
+                        <small *ngIf="form.email.errors.required">
+                            Por favor, informe o email
+                        </small>
+                        <small *ngIf="form.email.errors.email">
+                            Informe um endreço de email válido.
+                        </small>
+                    </span>
                 </div>
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="password" class="form-label">Senha</label>
                     <input type="password" class="form-control" id="password" placeholder="Digite sua senha" formControlName="password">
+                    <span class="text-danger" *ngIf="form.password.touched && form.password.invalid" >
+                        <small *ngIf="form.password.errors.required">
+                            Escolha uma senha
+                        </small>
+                        <small *ngIf="form.password.errors.pattern">
+                            A senha deve conter uma letra minúscula, uma letra maiúscula, um número, um símbolo e conter no mínimo 8 caracteres
+                        </small>
+                    </span>
                 </div>
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="passwordconfirm" class="form-label">Confirme sua Senha</label>
                     <input type="password" class="form-control" id="passwordconfirm" placeholder="Repita sua senha" formControlName="passwordConfirm">
+                    <span class="text-danger" *ngIf="form.passwordConfirm.touched && form.passwordConfirm.invalid" >
+                        <small *ngIf="form.passwordConfirm.errors.required">
+                            Confirme sua senha
+                        </small>
+                        <small *ngIf="form.passwordConfirm.errors.matchPassword">
+                            As senhas não conferem, por favor verifique.
+                        </small>
+                    </span>
                 </div>
                 <button type="submit" class="btn btn-primary" [disabled]="!formRegister.valid">Cadastrar</button>
             </form>
