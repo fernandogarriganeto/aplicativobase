@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 import { CriarContaRequest } from 'src/app/models/requests/criar-conta.request.models';
 import { CriarContaService } from 'src/app/services/criar-conta.service';
 import { MatchPasswordValidator } from 'src/app/validators/matchpassword.validator';
@@ -12,8 +13,12 @@ import { MatchPasswordValidator } from 'src/app/validators/matchpassword.validat
 })
 export class RegisterComponent {
 
+  mensagemSucesso: string = '';
+  mensagemErro: string = '';
+
   constructor(
-    private criarContaService: CriarContaService
+    private criarContaService: CriarContaService,
+    private spinnerService: NgxSpinnerService
   ){    
   }
 
@@ -48,6 +53,8 @@ export class RegisterComponent {
 
   onSubmit() : void {
 
+    this.spinnerService.show();
+
     let criarContaRequest: CriarContaRequest = {
       name: this.formRegister.value.name as string,
       email: this.formRegister.value.email as string,
@@ -56,12 +63,15 @@ export class RegisterComponent {
     
     this.criarContaService.post(criarContaRequest)
       .subscribe({
-        next: (response) => {
-          console.log(response);
+        next: (response) => {          
+          this.mensagemSucesso = `Parabéns ${response.name}, você foi cadastrado(a) com sucesso.`;
+          this.formRegister.reset();
         },
-        error: (e) => {
-          console.log(e.error);
+        error: (e) => {          
+          this.mensagemSucesso = 'Erro ao cadastrar usuário!'
         }
+      }).add(() => {
+        this.spinnerService.hide();
       });
 
     
