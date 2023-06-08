@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { CriarContaRequest } from 'src/app/models/requests/criar-conta.request.models';
+import { CriarContaService } from 'src/app/services/criar-conta.service';
 import { MatchPasswordValidator } from 'src/app/validators/matchpassword.validator';
 
 @Component({
@@ -8,6 +11,11 @@ import { MatchPasswordValidator } from 'src/app/validators/matchpassword.validat
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+
+  constructor(
+    private criarContaService: CriarContaService
+  ){    
+  }
 
   formRegister = new FormGroup({
     name: new FormControl('', [
@@ -39,7 +47,24 @@ export class RegisterComponent {
 
 
   onSubmit() : void {
-    console.log(this.formRegister.value);
+
+    let criarContaRequest: CriarContaRequest = {
+      name: this.formRegister.value.name as string,
+      email: this.formRegister.value.email as string,
+      password: this.formRegister.value.password as string, 
+    }
+    
+    this.criarContaService.post(criarContaRequest)
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (e) => {
+          console.log(e.error);
+        }
+      });
+
+    
   }
 
 
