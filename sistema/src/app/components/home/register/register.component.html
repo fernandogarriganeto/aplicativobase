@@ -9,6 +9,12 @@
                     <span aria-hidden="true"></span>
                 </button>
             </div>
+            <div class="alert alert-fail alert-dismissible fade show" role="alert" *ngIf="mensagemErro">
+                <strong>Erro!</strong> {{ mensagemErro }}
+                <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Close" (click)="mensagemErro = ''">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
             <form [formGroup]="formRegister" (ngSubmit)="onSubmit()">
                 <div class="mb-2">
                     <label for="nome" class="form-label">Nome</label>
