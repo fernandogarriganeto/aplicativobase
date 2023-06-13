@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
 
 import { LoginRequest } from 'src/app/models/requests/login.request.models';
 import { LoginService } from 'src/app/services/login.service';
@@ -18,7 +19,8 @@ export class LoginComponent {
 
   constructor(
     private loginService: LoginService,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private authenticationHelper: AuthenticationHelper
   ){    
   }
 
@@ -52,8 +54,9 @@ export class LoginComponent {
     
     this.loginService.post(loginRequest)
       .subscribe({
-        next: (response) => {          
-          this.mensagemSucesso = `Typo: ${response.type}, token: ${response.token}, expiresAt: ${response.expires_at}`;          
+        next: (response) => {                      
+          this.authenticationHelper.singIn(response);
+          window.location.href = '/dashboard'        
         },
         error: (e) => {          
           this.mensagemErro = 'Acesso não autorizado!'
